@@ -11,7 +11,16 @@ export async function create(req: Request, res: Response, next: NextFunction) {
       description,
     );
     res.status(201).json(post);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function list(req: Request, res: Response, next: NextFunction) {
+  try {
+    const posts = await postsService.listPosts();
+    res.status(200).json(posts);
+  } catch (error) {
+    next(error);
   }
 }

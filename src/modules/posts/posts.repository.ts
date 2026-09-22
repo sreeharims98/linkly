@@ -1,5 +1,5 @@
 import { pool } from "../../config/db.ts";
-import type { Post } from "../../types/index.ts";
+import { TEMP_USER_ID, type Post } from "../../types/index.ts";
 
 export async function insertPost(
   userId: number,
@@ -11,4 +11,9 @@ export async function insertPost(
     [userId, title, description],
   );
   return res.rows[0];
+}
+
+export async function findAllPosts(): Promise<Post[]> {
+  const res = await pool.query(`SELECT * FROM posts ORDER BY created_at DESC`);
+  return res.rows;
 }

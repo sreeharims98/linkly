@@ -7,3 +7,7 @@ export async function createPost(
 ) {
   return postsRepository.insertPost(userId, title, description);
 }
+
+export async function listPosts() {
+  return postsRepository.findAllPosts();
+}
