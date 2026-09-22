@@ -1,7 +1,7 @@
-CREATE TABLE posts (
+CREATE TABLE comments (
     id          SERIAL PRIMARY KEY,
+    post_id     INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    title       VARCHAR(255) NOT NULL,
-    description TEXT,
+    body        TEXT NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 )

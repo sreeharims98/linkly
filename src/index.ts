@@ -2,6 +2,8 @@ import express, { type Express, type Request, type Response } from "express";
 import { PORT } from "./config/env.ts";
 import { pool } from "./config/db.ts";
 import cors from "cors";
+import postsRoutes from "./modules/posts/posts.routes.ts";
+import { errorHandler } from "./middlewares/errorHandler.ts";
 
 const app: Express = express();
 
@@ -9,9 +11,7 @@ const app: Express = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
+app.use("/posts", postsRoutes);
 
 app.get("/health", async (req: Request, res: Response) => {
   try {
@@ -21,6 +21,8 @@ app.get("/health", async (req: Request, res: Response) => {
     res.status(503).json({ status: "error", db: "unreachable" });
   }
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: http://localhost:${PORT}`);
