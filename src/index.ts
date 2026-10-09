@@ -3,6 +3,7 @@ import { PORT } from "./config/env.ts";
 import { pool } from "./config/db.ts";
 import cors from "cors";
 import postsRoutes from "./modules/posts/posts.routes.ts";
+import commentsRoutes from "./modules/comments/comments.routes.ts";
 import { errorHandler } from "./middlewares/errorHandler.ts";
 
 const app: Express = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/posts", postsRoutes);
+app.use("/posts/:id/comments", commentsRoutes);
 
 app.get("/health", async (req: Request, res: Response) => {
   try {

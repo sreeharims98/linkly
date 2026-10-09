@@ -17,3 +17,10 @@ export async function findAllPosts(): Promise<Post[]> {
   const res = await pool.query(`SELECT * FROM posts ORDER BY created_at DESC`);
   return res.rows;
 }
+
+export async function findPostById(id: number): Promise<Post | null> {
+  const res = await pool.query(
+    `SELECT * FROM posts WHERE id=${id} ORDER BY created_at DESC`,
+  );
+  return res.rows[0];
+}
